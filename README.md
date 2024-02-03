@@ -153,6 +153,14 @@
 
 ## Samba server:
 
++ *Update server*
++ *Download Samba*
++ *Create directory for USB*
++ *Configure Samba*
++ *Restart service and mount USB*
++ *Create group and password for shared USB*
++ *Connect shared USB to (e.g. Windows)*
+
 **1.) Update server:**
   ```
   sudo apt update && sudo apt upgrade -y
@@ -181,7 +189,7 @@
   chmod 777 USB
   ```
 
-**4.) Configure Samba share:**
+**4.) Configure Samba:**
   ```
   sudo nano /etc/samba/smb.conf
   ```
