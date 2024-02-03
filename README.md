@@ -1,3 +1,12 @@
+# RPI Server - VaultWarden, Samba share  
+  - Documentation how to Download, Install and Configure VaultWarden and Samba for sharing USB over network + some security features, that everyone must have!
+
+
+## Repository architecture:
+
++ [**VaultWarden**](#vaultwarden)
++ [**Samba server**](#samba-server)
++ [**Sources**](#sources)
 ## VaultWarden:
 
 + *Update server*
