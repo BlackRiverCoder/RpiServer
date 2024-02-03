@@ -8,7 +8,7 @@
 
 **1.) Update server:**
   ```
-  sudo apt update && sudo apt upgrade
+  sudo apt update && sudo apt upgrade -y
   ```
 
 
@@ -137,7 +137,102 @@
     ```
 
 
+## Samba server:
+
+**1.) Update server:**
+  ```
+  sudo apt update && sudo apt upgrade -y
+  ```
+
+
+**2.) Download Samba:**
+  ```
+  sudo apt-get install samba samba-common-bin -y
+  ```
+
+**3.) Create directory for USB:**
+  - plug USB into Rpi and type:
+  ```
+  sudo fdisk -l
+  ```
+  - there should be **`/dev/sda1`**
+  - create directory to share via Samba
+  ```
+  sudo su
+  cd /
+  mkdir USB
+  ```
+  - edit access to the directory
+  ```
+  chmod 777 USB
+  ```
+
+**4.) Configure Samba share:**
+  ```
+  sudo nano /etc/samba/smb.conf
+  ```
+  - insert following content to the bottom of the file:
+  ```
+  [NAS-storage]
+  path = /USB
+  guest ok = Yes
+  writeable=Yes
+  create mask=0777
+  directory mask=0777
+  ```
+  - save file using **`CTRL+X`** and then **`Y`**
+
+**5.) Restart service and mount USB:**
+  - restart service
+  ```
+  sudo systemctl restart smbd
+  ```
+  - mount USB Drive
+  ```
+  sudo mount -t auto /dev/sda1 /USB
+  ```
+  - and check if it's mounted
+  ```
+  cd /USB
+  ls -l
+  ```
+  - here you must see directories stored in USB
+  - enable auto mount USB on every startup
+  ```
+  sudo nano /etc/fstab
+  ```
+  - here add following content
+  ```
+  /dev/sda1 /USB auto noatime 0 0
+  ```
+  - and save with **`CTRL+X`** and then **`Y`**
+
+**6.) Create group and password for shared USB:**
+  - create group with ownership to /USB
+  ```
+  sudo chgrp usbshare /USB
+  ```
+  - create account and add it to usbshare group
+  ```
+  sudo useradd -G usbshare auth-user1
+  ```
+  - set password for `auth-user1`
+  ```
+  sudo smbpasswd -a auth-user1
+  ```
+
+**7.) Connect shared USB to (e.g. Windows):**
+  - in windows file explorer click **`Map network drive`**
+  - select your letter and folder will be:
+  ```
+  \\<your-ip>\USB
+  ```
+  - click `Finish` and enter credentials for **`auth-user1`**
+
+
+
 ## Sources:
 + https://www.youtube.com/watch?v=eCJA1F72izc
 + https://github.com/dani-garcia/vaultwarden
 + https://github.com/dani-garcia/vaultwarden/wiki/Private-CA-and-self-signed-certs-that-work-with-Chrome
++ https://www.youtube.com/watch?v=kORPl14tkWg
