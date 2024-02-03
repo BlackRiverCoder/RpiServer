@@ -100,14 +100,6 @@
       - **[Safari](https://manuals.gfi.com/en/kerio/connect/content/server-configuration/ssl-certificates/making-ssl-certificates-trusted-in-safari-1910.html)**
       - **[Android](https://support.securly.com/hc/en-us/articles/212869927-How-do-I-install-Securly-SSL-certificate-on-Android-device)**
       - **[IOS](https://support.apple.com/en-us/102390)**
-  - ***Download BitWarden app:***
-    - **[Chrome](https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb/related?hl=en)**
-    - **[FireFox](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/)**
-    - **[Opera](https://addons.opera.com/en/extensions/details/bitwarden-free-password-manager/)**
-    - **[Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/bitwarden-free-password/jbkfoedolllekgbhcbcoahefnbanhhlh?hl=en-GB)**
-    - **[Safari](https://bitwarden.com/help/install-safari-app-extension/)**
-    - **[Android](https://play.google.com/store/apps/details?id=com.x8bit.bitwarden&hl=en_US)**
-    - **[IOS](https://apps.apple.com/us/app/bitwarden-password-manager/id1137397744)**
 
     
 **4.) Download and run VaultWarden:**
@@ -119,6 +111,14 @@
     ```
     docker run -d --name vaultwarden --restart unless-stopped -v /vw-data:/data -v /etc/ssl/certs:/ssl -e ROCKET_TLS='{certs="/ssl/vaultwarden.crt",key="/ssl/vaultwarden.key"}' -e ADMIN_TOKEN=<you-can-type-your-admin-token-here(any_long_password)> -p 8080:80 vaultwarden/server:latest
     ```
+  - ***Download BitWarden app:***
+    - **[Chrome](https://chrome.google.com/webstore/detail/bitwarden-free-password-m/nngceckbapebfimnlniiiahkandclblb/related?hl=en)**
+    - **[FireFox](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/)**
+    - **[Opera](https://addons.opera.com/en/extensions/details/bitwarden-free-password-manager/)**
+    - **[Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/bitwarden-free-password/jbkfoedolllekgbhcbcoahefnbanhhlh?hl=en-GB)**
+    - **[Safari](https://bitwarden.com/help/install-safari-app-extension/)**
+    - **[Android](https://play.google.com/store/apps/details?id=com.x8bit.bitwarden&hl=en_US)**
+    - **[IOS](https://apps.apple.com/us/app/bitwarden-password-manager/id1137397744)**
 
 
 **5.) Update VaultWarden:**
