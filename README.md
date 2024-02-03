@@ -1,5 +1,6 @@
 # RPI Server - VaultWarden, Samba share  
   - Documentation how to Download, Install and Configure VaultWarden and Samba for sharing USB over network + some security features, that everyone must have!
+    
 
 
 ## Repository architecture:
@@ -7,6 +8,9 @@
 + [**VaultWarden**](#vaultwarden)
 + [**Samba server**](#samba-server)
 + [**Sources**](#sources)
+
+
+  
 ## VaultWarden:
 
 + *Update server*
@@ -144,6 +148,7 @@
     ```
     docker run -d --name vaultwarden --restart unless-stopped -v /vw-data:/data -v /etc/ssl/certs:/ssl -e ROCKET_TLS='{certs="/ssl/vaultwarden.crt",key="/ssl/vaultwarden.key"}' -e ADMIN_TOKEN=<you-can-type-your-admin-token-here(any_long_password)> -p 8080:80 vaultwarden/server:latest
     ```
+    
 
 
 ## Samba server:
@@ -237,6 +242,77 @@
   \\<your-ip>\USB
   ```
   - click `Finish` and enter credentials for **`auth-user1`**
+
+
+
+## Security:
+**1.) 2FA on ssh login:**
+  - Update server
+  ```
+  sudo apt update && sudo apt upgrade -y
+  ```
+  - Downlaod and install Google Authenticator PAM module
+  ```
+  sudo apt install libpam-google-authenticator
+  ```
+  - Configuring ssh
+    - in `/etc/pam.d/sshd` add following content and restart sshd daemon
+    ```
+    auth required pam_google_authenticator.so
+    ```
+    ```
+    sudo systemctl restart sshd.service
+    ```
+    - in `/etc/ssh/sshd_config` change no to **yes**
+    ```
+    ChallengeResponseAuthentication yes
+    ```
+  - Configuring authentication
+    - run
+    ```
+    google-authenticator
+    ```
+    - reccomended configuration
+      Make tokens “time-base””: yes
+      Update the .google_authenticator file: yes
+      Disallow multiple uses: yes
+      Increase the original generation time limit: no
+      Enable rate-limiting: yes
+
+
+**2.) Automatic updates:**
+  - Install the unattended-upgrades
+  ```
+  sudo apt install unattended-upgrades
+  ```
+  - Create `02periodic` file
+  ```
+  sudo nano /etc/apt/apt.conf.d/02periodic
+  ```
+  - Insert following content
+  ```
+  APT::Periodic::Enable “1”;
+  APT::Periodic::Update-Package-Lists “1”;
+  APT::Periodic::Download-Upgradeable-Packages “1”;
+  APT::Periodic::Unattended-Upgrade “1”;
+  APT::Periodic::AutocleanInterval “1”;
+  APT::Periodic::Verbose “2”;
+  ```
+  - save file using **`CTRL+X`** and then **`Y`**
+
+
+**3.) Make sudo require password:**
+  - open file
+  ```
+  sudo nano /etc/sudoers.d/010_pi-nopasswd
+  ```
+  - find `pi ALL=(ALL) NOPASSWD: ALL` and replace with
+  ```
+  pi ALL=(ALL) PASSWD: ALL
+  ```
+  - save file using **`CTRL+X`** and then **`Y`**
+    
+  
 
 
 
