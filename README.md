@@ -7,6 +7,7 @@
 
 + [**VaultWarden**](#vaultwarden)
 + [**Samba server**](#samba-server)
++ [**Security features**](#security-features)
 + [**Sources**](#sources)
 
 
@@ -253,7 +254,7 @@
 
 
 
-## Security:
+## Security features:
 **1.) 2FA on ssh login:**
   - Update server
   ```
